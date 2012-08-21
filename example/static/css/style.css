@@ -1,0 +1,20 @@
+.small {
+    font-size: 11px;
+    color: #888;
+}
+
+.selectable_table {
+    width: 100%;
+}
+.selectable_table .image {
+    width: 40%;
+}
+
+.select2-highlighted .small {
+    color: #eee;
+}
+/*
+div[class*="span"].select2-container {
+    margin-left: 0;
+}
+*/

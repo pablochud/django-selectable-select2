@@ -1,0 +1,9 @@
+{% for field in form %}
+    {{ field.errors }}
+    <div id="div_{{ field.auto_id }}" class="clearfix control-group{% if field.errors %} error{% endif %}">
+        <label for="{{ field.id_for_label }}" class="control-label {% if field.field.required %}requiredField{% endif %}">
+            {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}:
+        </label>
+        {{ field }}
+    </div>
+{% endfor %}

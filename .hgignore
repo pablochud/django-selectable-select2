@@ -1,0 +1,8 @@
+syntax: regexp
+\.pyc$
+\.swp$
+(?!^\.hgignore$)^\.
+
+syntax: glob
+.sass-cache
+example.db

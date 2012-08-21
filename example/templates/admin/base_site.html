@@ -1,0 +1,11 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }} | Django-Selectable Example Site{% endblock title %}
+{% block extrahead %}
+    {% load selectable_tags %}
+    {% include_ui_theme %}
+    {% include_jquery_libs %}
+{% endblock %}
+{% block branding %}
+<h1 id="site-name">Django-Selectable Administration</h1>
+{% endblock branding %}
+{% block nav-global %}{% endblock nav-global %}

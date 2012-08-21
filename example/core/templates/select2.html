@@ -1,0 +1,87 @@
+{% load selectable_tags %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Django-Selectable Example{% endblock %}</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap-responsive.min.css" >
+    {% include_ui_theme %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+    <link rel="stylesheet" href="http://ivaynberg.github.com/select2/select2-2.1/select2.css">
+    {#{ form.media.css }#}
+    
+    {% block extra-css %}{% endblock %}
+</head>
+<body>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a>
+                <a class="brand" href="#">Django-Selectable</a>
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="active"><a href="/">Home</a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <div class="container">
+    <h1>Example Project</h1>
+    {% block content %}
+        <form action="" method="post" >
+            {% csrf_token %}
+            {{ form.fields }}
+            {% if form.is_valid %}
+                {{ form.as_p }}
+                <h2>Cleaned Data</h2>
+                {{ form.cleaned_data }}
+            {% else %}
+                {{ form.as_p }}
+            {% endif %}
+            <button class="btn">Submit</button>
+        </form>
+    {% endblock %}
+    </div>
+    {% include_jquery_libs %}
+    <script type="text/javascript" charset="utf-8" src="http://ivaynberg.github.com/select2/select2-2.1/select2.js"></script>
+    {#{ form.media.js }#}
+    {% block extra-js %}
+    <script>
+        var djs2limit = 10;
+
+        var $selectitem = $("#id_select2");
+        $selectitem.select2({
+             placeholder     : { 'value' : 'Wybierz...', 'label' : '', 'id' : '' },
+             minimumInputLength : 1,
+             minimumResultsForSearch: djs2limit,
+             allowClear      : true,
+             ajax            : {
+                                  url : '/selectable/core-fruitlookup/',
+                                  dataType: 'json',
+                                  data : function (term, page, context) {
+                                       console.log("CONTEXT");
+                                       console.log(context);
+                                       return { 'term' : term, limit: djs2limit, page: page }
+                                  },
+                                  results : function (data, page) {
+                                       var more = (page * djs2limit) < data.meta.total
+                                       return { results : data.data, more : more }
+                                  }
+                               },
+             formatResult    : function (state) { return state.label },
+             formatSelection : function (state) { return state.value }
+         });
+
+         $selectitem.on('change', function (e) {
+            console.log(e.target);
+         });
+    </script>
+    {% endblock %}
+</body>
+</html>
