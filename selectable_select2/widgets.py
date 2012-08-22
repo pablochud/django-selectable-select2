@@ -42,7 +42,6 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
         return attrs
 
     def render(self, name, value, attrs=None):
-        print 'R', name, value, attrs, self.initial_selection
         # when there is a value and no initial_selection was passed to the widget
         if value is not None and (self.initial_selection is None or self.initial_selection == ''):
             lookup = self.lookup_class()
