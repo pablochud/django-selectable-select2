@@ -6,3 +6,7 @@ syntax: regexp
 syntax: glob
 .sass-cache
 example.db
+build
+dist
+django_selectable_select2.egg-info
+
