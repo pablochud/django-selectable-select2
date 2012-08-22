@@ -7,6 +7,7 @@ MEDIA_URL = settings.MEDIA_URL
 STATIC_URL = getattr(settings, 'STATIC_URL', u'')
 MEDIA_PREFIX = u'%sselectable_select2/' % (STATIC_URL or MEDIA_URL)
 
+# these are the kwargs that u can pass when instantiating the widget
 TRANSFERABLE_ATTRS = ('placeholder', 'initial_selection')
 
 
@@ -25,13 +26,10 @@ class SelectableSelect2MediaMixin(object):
 
 class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
 
-    # these are the kwargs that u can pass when instantiating the widget
-
     def __init__(self, *args, **kwargs):
         for attr in TRANSFERABLE_ATTRS:
             setattr(self, attr, kwargs.pop(attr, ''))
         super(Select2BaseWidget, self).__init__(*args, **kwargs)
-        print dir(self)
 
     def build_attrs(self, extra_attrs=None, **kwargs):
         attrs = super(Select2BaseWidget, self).build_attrs(extra_attrs, **kwargs)
@@ -43,12 +41,17 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
         attrs[u'data-selectable-type'] = 'select2'
         return attrs
 
+    def render(self, name, value, attrs=None):
+        print 'R', name, value, attrs, self.initial_selection
+        # when there is a value and no initial_selection was passed to the widget
+        if value is not None and (self.initial_selection is None or self.initial_selection == ''):
+            lookup = self.lookup_class()
+            item = lookup.get_item(value)
+            if item is not None:
+                initial_selection = lookup.get_item_value(item)
+                self.initial_selection = initial_selection
+        return super(Select2BaseWidget, self).render(name, value, attrs)
+
 
 class AutoCompleteSelect2Widget(Select2BaseWidget):
     pass
-
-
-class ValueAwareAutoCompleteSelect2Widget(Select2BaseWidget):
-
-    def __init__(self, *args, **kwargs):
-        pass
