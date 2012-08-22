@@ -1,3 +1,14 @@
+TODO list of django-selectable-select2
+=======================================
+
+tasks to be done
+-----------------
+
 * make changes to admin.py in example project
 * add multiple widget
 * add other options (like allow_clear)
+* make jquery plugin with default options
+
+done tasks
+------------
+
