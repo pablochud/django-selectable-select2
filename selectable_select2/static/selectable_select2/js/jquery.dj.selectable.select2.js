@@ -25,6 +25,7 @@
                                   }
                                 },
             initSelection    :  function (element, callback) {
+                                  /** TODO: adjust this to work with multiple selection */
                                     var data = {};
                                     var el_val = element.val();
                                     var initial_selection = element.data('initialSelection');
