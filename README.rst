@@ -28,7 +28,7 @@ Installation and usage
 
 * define your `lookup class`_
 
-.. note::
+.. warning::
     as for now (until `issue #64`_ is resolved) you should inherit from ``selectable_select2.base.LookupBase`` and ``selectable_select2.base.ModelLookup``
 
 * in your forms you can use ``selectable_select2.widgets.AutoCompleteSelect2Widget`` like so::
