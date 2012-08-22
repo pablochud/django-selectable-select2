@@ -21,7 +21,7 @@ class FancyFruitLookup(FruitLookup):
         <table class="selectable_table">
             <tr>
                 <td rowspan="2" class="image">
-                    <img src="{{ item.fruit_image.url }}" alt="">
+                    <img src="{{ item.fruit_image.url }}" alt="" width="50px" height="50px">
                 </td>
                 <td>{{ item.name }}</td>
             </tr>

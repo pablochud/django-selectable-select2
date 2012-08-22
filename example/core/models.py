@@ -33,3 +33,10 @@ class ReferencesTest(models.Model):
     fruit  = models.ForeignKey(Fruit, related_name="first_r")
     fruit2 = models.ForeignKey(Fruit, related_name="second_r")
     farm   = models.ForeignKey(Farm)
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('example-detail', [str(self.id)])
+
+    def __unicode__(self):
+        return u"%s: %s - %s - %s - %s" % (str(self.pk), self.city, self.fruit, self.fruit2, self.farm)

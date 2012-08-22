@@ -3,7 +3,7 @@ from django.template import RequestContext
 
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from example.core.forms import FruitForm, ChainedForm, FarmFormset, ReferencesTestForm
+from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm
 from example.core.models import ReferencesTest
 
 
@@ -28,6 +28,21 @@ def list(request):
     rlist = ReferencesTest.objects.all()
     return render_to_response('list.html', {'object_list': rlist}, context_instance=RequestContext(request))
 
+
+def detail(request, pk):
+    obj = ReferencesTest.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = ReferencesTestForm(request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("example-list"))
+    else:
+        if request.GET:
+            form = ReferencesTestForm(initial=request.GET, instance=obj)
+        else:
+            form = ReferencesTestForm(instance=obj)
+
+    return render_to_response('base.html', {'form': form}, context_instance=RequestContext(request))
 
 
 def advanced(request):
