@@ -1,11 +1,11 @@
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.utils import simplejson as json
-from selectable.base import (LookupBase as SelectableBaseLookup,
+from selectable.base import (LookupBase as SelectableLookupBase,
         ModelLookup as SelectableModelLookup)
 
 
-class BaseLookup(SelectableBaseLookup):
+class LookupBase(SelectableLookupBase):
 
     max_limit = 100
 
@@ -80,5 +80,5 @@ class BaseLookup(SelectableBaseLookup):
         return HttpResponse(content, content_type=content_type)
 
 
-class ModelLookup(BaseLookup, SelectableModelLookup):
+class ModelLookup(LookupBase, SelectableModelLookup):
     pass
