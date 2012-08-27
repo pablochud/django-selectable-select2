@@ -49,8 +49,10 @@ Installation and usage
 
 Check the `example` project for more details.
 
+TODO
+======
 
-.. include:: TODO.rst
+check out `TODO.rst`
 
 .. _issue #64: https://bitbucket.org/mlavin/django-selectable/issue/64/decouple-building-results-from
 .. _django-selectable: https://bitbucket.org/mlavin/django-selectable
