@@ -43,7 +43,8 @@
             },
             formatSelection  :  function (state) {
               return state.value;
-            }
+            },
+            doEscapeMarkup: false
         });
      });
   });

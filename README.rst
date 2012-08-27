@@ -10,7 +10,7 @@ This project is a kind of a plugin for `django-selectable`_.
 It provides widgets for use with a great JS library called `select2`_ rather than jQuery UI.
 It also provides it's own Lookup classes for better (IMO) serialization results and limiting results (on server side).
 
-For now there's only a basic single valued autocomplete widget for usage on ForeignKey (or simply ModelChoiceField) fields.
+For now there's only a basic single-valued autocomplete widget for usage on ForeignKey (or simply ModelChoiceField) fields.
 
 Installation and usage
 =========================
@@ -57,3 +57,16 @@ Check the `example` project for more details.
 .. _django-selectable: https://bitbucket.org/mlavin/django-selectable
 .. _select2: http://ivaynberg.github.com/select2/index.html
 .. _lookup class: http://django-selectable.readthedocs.org/en/latest/lookups.html
+
+
+A note about my version of select2.js
+========================================
+
+In my version of select2.js I've added an option that allows to not escape the markup.
+Basically it adds one option to the defaults called 'doEscapeMarkup'.
+Everything else should be working fine though.
+If you want to use this version do it like this::
+
+    <script src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
+
+See https://github.com/ivaynberg/select2/pull/355 for details.
