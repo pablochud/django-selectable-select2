@@ -58,7 +58,7 @@ check out `TODO.rst`
 A note about version of select2.js used here
 ==============================================
 
-django-selectable-select2 comes bundled with "unstable" version of `select2.js`_. 
+django-selectable-select2 comes bundled with "unstable" version of `select2`_. 
 This version is above commit `7baa3b9e9`_ (the unstable and unreleased 3.2 version)
 where you can provide your own function to escape the markup.
 If you want to use this version (e.g. on other select widgets in your project) do it like this::
@@ -70,7 +70,7 @@ See https://github.com/ivaynberg/select2/pull/355 for details.
 Credits
 ==========
 
-A BIG THANK YOU goes to `Igor Vaynberg`_ (`select2.js`) and `Mark Lavin`_ (`django-selectable`_) 
+A BIG THANK YOU goes to `Igor Vaynberg`_ (`select2`_) and `Mark Lavin`_ (`django-selectable`_) 
 for their projects, their support and quick response time in resolving my issues.
 
 .. _Igor Vaynberg: https://github.com/ivaynberg
