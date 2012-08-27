@@ -54,20 +54,31 @@ TODO
 
 check out `TODO.rst`
 
-.. _issue #64: https://bitbucket.org/mlavin/django-selectable/issue/64/decouple-building-results-from
-.. _django-selectable: https://bitbucket.org/mlavin/django-selectable
-.. _select2: http://ivaynberg.github.com/select2/index.html
-.. _lookup class: http://django-selectable.readthedocs.org/en/latest/lookups.html
 
+A note about version of select2.js used here
+==============================================
 
-A note about my version of select2.js
-========================================
-
-In my version of select2.js I've added an option that allows to not escape the markup.
-Basically it adds one option to the defaults called 'doEscapeMarkup'.
-Everything else should be working fine though.
-If you want to use this version do it like this::
+django-selectable-select2 comes bundled with "unstable" version of `select2.js`_. 
+This version is above commit `7baa3b9e9`_ (the unstable and unreleased 3.2 version)
+where you can provide your own function to escape the markup.
+If you want to use this version (e.g. on other select widgets in your project) do it like this::
 
     <script src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
 
 See https://github.com/ivaynberg/select2/pull/355 for details.
+
+Credits
+==========
+
+A BIG THANK YOU goes to `Igor Vaynberg`_ (`select2.js`) and `Mark Lavin`_ (`django-selectable`_) 
+for their projects, their support and quick response time in resolving my issues.
+
+.. _Igor Vaynberg: https://github.com/ivaynberg
+.. _Mark Lavin: https://bitbucket.org/mlavin
+
+.. _7baa3b9e9: https://github.com/ivaynberg/select2/commit/7baa3b9e93690b7dacad8fbb22f71b8a3940e04d
+.. _django-selectable: https://bitbucket.org/mlavin/django-selectable
+.. _select2: http://ivaynberg.github.com/select2/index.html
+.. _lookup class: http://django-selectable.readthedocs.org/en/latest/lookups.html
+.. _issue #64: https://bitbucket.org/mlavin/django-selectable/issue/64/decouple-building-results-from
+

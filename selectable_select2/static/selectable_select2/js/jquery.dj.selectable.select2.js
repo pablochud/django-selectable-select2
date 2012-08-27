@@ -1,7 +1,7 @@
 (function($) {
   $(document).ready(function() {
 
-    var djs2limit = 16;
+    var djs2limit = 20;
 
     var $selectitems = $("[data-selectable-type]=select2");
     $selectitems.each( function(index) {
@@ -44,7 +44,7 @@
             formatSelection  :  function (state) {
               return state.value;
             },
-            doEscapeMarkup: false
+            escapeMarkup: function(markup) { return markup; }
         });
      });
   });
