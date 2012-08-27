@@ -1,6 +1,5 @@
-==========================
 django-selectable-select2
-==========================
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. warning::
     this is still a work in progress
