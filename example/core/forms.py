@@ -14,7 +14,7 @@ class ReferencesTestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ReferencesTestForm, self).__init__(*args, **kwargs)
         ct = self.fields['city']
-        ct.widget = Select2Widget(CityLookup, placeholder="select a state")
+        ct.widget = Select2Widget(CityLookup, placeholder="select a state", limit=20)
 
     class Meta:
         model = ReferencesTest

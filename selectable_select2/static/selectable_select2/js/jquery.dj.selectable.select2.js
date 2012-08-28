@@ -17,7 +17,7 @@
                                   url : djs2url,
                                   dataType: 'json',
                                   data : function (term, page) {
-                                       return { term : term, limit: djs2limit, page: page };
+                                       return { term : term, page: page };
                                   },
                                   results : function (data, page) {
                                       var more = data.meta.next_page ? true : false;
