@@ -7,6 +7,47 @@
     $selectitems.each( function(index) {
         var $selectitem = $(this);
         var djs2url = $selectitem.data('selectableUrl');
+        var clearonparentchange = $selectitem.data('clearonparentchange');
+
+        var parents = [], parents_tmp = $selectitem.data('parents');
+        if (parents_tmp) {
+          parents_tmp = parents_tmp.split(',');
+          $.each(parents_tmp, function(index, parent) {
+              if (parent) {
+                var el = $('#' + parent);
+                parents.push(el);
+
+                /* attach a "clear child" action to parents */
+                if (clearonparentchange) {
+                  el.change(function(evo) {
+                    var val = false;
+                    if (!val) {
+                      $selectitem.data('select2').clear();
+                      $selectitem.trigger('change');
+                    }
+                  });
+                }
+              }
+          });
+        }
+
+
+        /* get an object parent names and values - for sending via AJAX */
+        var get_parents_for_data = function () {
+          var obj = {};
+
+          $.each(parents, function(index, $parent) {
+            var val, name = $parent.attr("name");
+            if ($parent.hasOwnProperty("select2")) {
+              val = $parent.select2("val");
+            } else {
+              val = $parent.val();
+            }
+            obj[name] = val;
+          });
+
+          return obj;
+        };
 
         $selectitem.select2({
             // minimumInputLength : 1,
@@ -17,7 +58,12 @@
                                   url : djs2url,
                                   dataType: 'json',
                                   data : function (term, page) {
-                                       return { term : term, page: page };
+                                      var obj = { term : term, page: page};
+                                      var parent_obj = get_parents_for_data();
+                                      if (parent_obj) {
+                                        $.extend(obj, parent_obj);
+                                      }
+                                       return obj;
                                   },
                                   results : function (data, page) {
                                       var more = data.meta.next_page ? true : false;

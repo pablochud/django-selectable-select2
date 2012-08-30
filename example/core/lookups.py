@@ -1,10 +1,12 @@
 from django.contrib.auth.models import User
 
-from selectable_select2.base import ModelLookup
+from selectable_select2.base import ModelLookup, LookupBase
 from selectable.registry import registry
 
 from example.core.models import Fruit, City
 from django import template
+
+from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
 
 class FruitLookup(ModelLookup):
@@ -52,11 +54,41 @@ class CityLookup(ModelLookup):
     def get_query(self, request, term):
         results = super(CityLookup, self).get_query(request, term)
         state = request.GET.get('state', '')
+
+        # support for second field
+        if state == '':
+            state = request.GET.get('state2', '')
+
         if state:
             results = results.filter(state=state)
+        else:
+            results = []
         return results
 
     def get_item_label(self, item):
         return u"%s, %s" % (item.name, item.state)
 
 registry.register(CityLookup)
+
+
+class StateLookup(LookupBase):
+
+    def get_query(self, request, term):
+        choices = STATE_CHOICES[:]
+
+        def filter_function(item):
+            if term.lower() in item[1].lower() or not term:
+                return True
+            return False
+        return filter(filter_function, choices)
+
+    def get_item_id(self, item):
+        return item[0]
+
+    def get_item_label(self, item):
+        return item[1]
+
+    def get_item_value(self, item):
+        return item[1]
+
+registry.register(StateLookup)

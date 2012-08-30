@@ -54,6 +54,7 @@ def advanced(request):
             form = ChainedForm(initial=request.GET)
         else:
             form = ChainedForm()
+    print form.media
 
     return render_to_response('advanced.html', {'form': form}, context_instance=RequestContext(request))
 

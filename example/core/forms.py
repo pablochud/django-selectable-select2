@@ -4,9 +4,10 @@ from django.contrib.localflavor.us.forms import USStateField, USStateSelect
 
 import selectable.forms as selectable
 
-from example.core.lookups import FruitLookup, CityLookup, FancyFruitLookup
-from example.core.models import Farm, ReferencesTest
+from example.core.lookups import FruitLookup, CityLookup, FancyFruitLookup, StateLookup
+from example.core.models import Farm, ReferencesTest, City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
+from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
 
 class ReferencesTestForm(forms.ModelForm):
@@ -24,12 +25,25 @@ class ReferencesTestForm(forms.ModelForm):
 
 
 class ChainedForm(forms.Form):
-    city = selectable.AutoComboboxSelectField(
-        lookup_class=CityLookup,
-        label='City',
-        required=False,
-    )
-    state = USStateField(widget=USStateSelect, required=False)
+    state = forms.ChoiceField(choices = (('', '---'),) + STATE_CHOICES,
+        #USStateField(
+            widget=Select2Widget(StateLookup, placeholder="select a state"),
+            #widget=USStateSelect,
+            required=False)
+
+    state2 = forms.ChoiceField(choices = (('', '---'),) + STATE_CHOICES,
+        #USStateField(
+            #widget=Select2Widget(StateLookup, placeholder="select a state"),
+            widget=USStateSelect,
+            required=False)
+
+    # city = selectable.AutoComboboxSelectField(lookup_class=CityLookup, label='City', required=False, )
+    city = forms.ModelChoiceField(empty_label= "", queryset=CityLookup().get_queryset(),
+        widget=Select2Widget(
+            CityLookup,
+            placeholder="select a city",
+            parents="id_state,id_state2",
+            clearonparentchange=True))
 
 
 class FarmForm(forms.ModelForm):
