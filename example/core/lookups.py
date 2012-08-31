@@ -77,7 +77,7 @@ class StateLookup(LookupBase):
         choices = STATE_CHOICES[:]
 
         def filter_function(item):
-            if term.lower() in item[1].lower() or not term:
+            if not term or term.lower() in item[1].lower():
                 return True
             return False
         return filter(filter_function, choices)
