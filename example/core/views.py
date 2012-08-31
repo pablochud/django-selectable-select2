@@ -3,7 +3,7 @@ from django.template import RequestContext
 
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm
+from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm, ChainedForm2
 from example.core.models import ReferencesTest
 
 
@@ -45,18 +45,20 @@ def detail(request, pk):
     return render_to_response('base.html', {'form': form}, context_instance=RequestContext(request))
 
 
-def advanced(request):
+def advanced(request, form_type = 1):
+    FormClass = ChainedForm
+    if form_type == 2:
+        FormClass = ChainedForm2
 
     if request.method == 'POST':
-        form = ChainedForm(request.POST)
+        form = FormClass(request.POST)
     else:
         if request.GET:
-            form = ChainedForm(initial=request.GET)
+            form = FormClass(initial=request.GET)
         else:
-            form = ChainedForm()
-    print form.media
+            form = FormClass()
 
-    return render_to_response('advanced.html', {'form': form}, context_instance=RequestContext(request))
+    return render_to_response('advanced.html', {'form': form, 'form_name' : FormClass.__name__ }, context_instance=RequestContext(request))
 
 
 def formset(request):

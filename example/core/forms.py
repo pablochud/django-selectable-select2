@@ -7,6 +7,7 @@ import selectable.forms as selectable
 from example.core.lookups import FruitLookup, CityLookup, FancyFruitLookup, StateLookup
 from example.core.models import Farm, ReferencesTest, City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
+from selectable_select2.forms import Select2DependencyFormMixin
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
 
@@ -44,6 +45,25 @@ class ChainedForm(forms.Form):
             placeholder="select a city",
             parents="id_state,id_state2",
             clearonparentchange=True))
+
+
+class ChainedForm2(Select2DependencyFormMixin, forms.Form):
+    state = forms.ChoiceField(choices = (('', '---'),) + STATE_CHOICES,
+        #USStateField(
+            widget=Select2Widget(StateLookup, placeholder="select a state"),
+            #widget=USStateSelect,
+            required=False)
+    state2 = forms.ChoiceField(choices = (('', '---'),) + STATE_CHOICES,
+        #USStateField(
+            #widget=Select2Widget(StateLookup, placeholder="select a state"),
+            widget=USStateSelect,
+            required=False)
+
+    # city = selectable.AutoComboboxSelectField(lookup_class=CityLookup, label='City', required=False, )
+    city = forms.ModelChoiceField(empty_label= "", queryset=CityLookup().get_queryset(),
+        widget=Select2Widget(CityLookup, placeholder="select a city"))
+
+    select2_deps = { 'city' : { 'parents' : ['state', 'state2'] } }
 
 
 class FarmForm(forms.ModelForm):
