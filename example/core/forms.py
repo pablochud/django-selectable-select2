@@ -8,6 +8,7 @@ from example.core.lookups import FruitLookup, CityLookup, FancyFruitLookup, Stat
 from example.core.models import Farm, ReferencesTest, City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
 from selectable_select2.forms import Select2DependencyFormMixin
+from selectable_select2.forms import Select2DependencyForm
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
 
@@ -47,7 +48,7 @@ class ChainedForm(forms.Form):
             clearonparentchange=True))
 
 
-class ChainedForm2(Select2DependencyFormMixin, forms.Form):
+class ChainedForm2(Select2DependencyForm):
     state = forms.ChoiceField(choices = (('', '---'),) + STATE_CHOICES,
         #USStateField(
             widget=Select2Widget(StateLookup, placeholder="select a state"),

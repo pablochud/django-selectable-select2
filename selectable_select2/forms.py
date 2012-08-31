@@ -8,10 +8,6 @@ class Select2DependencyFormMixin(object):
     # '<fieldname>' : { 'parents' : ['list', 'of', 'parent', fieldnames'], 'clearonparentchange' : True/False }
     select2_deps = {}
 
-    def __init__(self, *args, **kwargs):
-        super(Select2DependencyFormMixin, self).__init__(*args, **kwargs)
-        self.apply_select2_deps()
-
     def apply_select2_deps(self):
         for field, opts in self.select2_deps.items():
             parents_list = []
@@ -27,8 +23,14 @@ class Select2DependencyFormMixin(object):
 
 
 class Select2DependencyForm(Select2DependencyFormMixin, forms.Form):
-    pass
+
+    def __init__(self, *args, **kwargs):
+        super(Select2DependencyForm, self).__init__(*args, **kwargs)
+        self.apply_select2_deps()
 
 
 class Select2DependencyModelForm(Select2DependencyFormMixin, forms.ModelForm):
-    pass
+
+    def __init__(self, *args, **kwargs):
+        super(Select2DependencyModelForm, self).__init__(*args, **kwargs)
+        self.apply_select2_deps()
