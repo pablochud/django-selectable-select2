@@ -5,7 +5,6 @@ tasks to be done
 -----------------
 
 * support ManyToMany (i.e. multiple choices)
-* support chained fields (e.g. state and city)
 * support FormSets
 * support allow_new option
 * make changes to admin.py in example project
@@ -16,4 +15,5 @@ done tasks
 ------------
 
 * replacement for Select widget in ModelChoiceField
+* support chained fields (e.g. state and city)
 

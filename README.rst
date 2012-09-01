@@ -2,7 +2,7 @@ django-selectable-select2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. warning::
-    this is still a work in progress
+    This is still a work in progress. Some backwards incompatible changes may happen between releases.
 
 This project is a kind of a plugin for `django-selectable`_.
 
@@ -46,6 +46,54 @@ Installation and usage
                 'myfk' : AutoCompleteSelect2Widget(MyModelLookup, placeholder='select related item')
             }
 
+How to include static assets?
+----------------------------------
+
+There are at least 2 ways of including static assets to work with django-selectable-select2.
+Both of them assumes that jQuery is already included.
+
+* First of all you can use the form's `media` attribute to include appropriate js and css files.
+
+Like so::
+
+    <html>
+        <head>
+            {{ form.media.css }}
+        </head>
+
+        <body>
+            <form action="." method="post">
+                {{ form.as_p }}
+                <p><button type="submit">Submit</button></p>
+            </form>
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+            {{ form.media.js }}
+        </body>
+    </html>
+
+    .. note::
+        The `form.media.js` also includes the `jquery.django.admin.fix.js`_ to work with django admin panel.
+        You may not need this.
+
+* Or you can mannually include those assets (assuming you're using django-staticfiles). Like so::
+
+    <html>
+        <head>
+            <link rel="stylesheet" href="{{ STATIC_URL }}selectable_select2/js/select2.css">
+        </head>
+
+        <body>
+            <form action="." method="post">
+                {{ form.as_p }}
+                <p><button type="submit">Submit</button></p>
+            </form>
+
+            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/jquery.dj.selectable.select2.js"></script>
+        </body>
+    </html>
 
 Check the `example` project for more details.
 
@@ -58,7 +106,7 @@ check out `TODO.rst`
 A note about version of select2.js used here
 ==============================================
 
-django-selectable-select2 comes bundled with "unstable" version of `select2`_. 
+django-selectable-select2 comes bundled with "unstable" version of `select2`_.
 This version is above commit `7baa3b9e9`_ (the unstable and unreleased 3.2 version)
 where you can provide your own function to escape the markup.
 If you want to use this version (e.g. on other select widgets in your project) do it like this::
@@ -70,12 +118,13 @@ See https://github.com/ivaynberg/select2/pull/355 for details.
 Credits
 ==========
 
-A BIG THANK YOU goes to `Igor Vaynberg`_ (`select2`_) and `Mark Lavin`_ (`django-selectable`_) 
+A BIG THANK YOU goes to `Igor Vaynberg`_ (`select2`_) and `Mark Lavin`_ (`django-selectable`_)
 for their projects, their support and quick response time in resolving my issues.
 
 .. _Igor Vaynberg: https://github.com/ivaynberg
 .. _Mark Lavin: https://bitbucket.org/mlavin
 
+.. _jquery.django.admin.fix.js:
 .. _7baa3b9e9: https://github.com/ivaynberg/select2/commit/7baa3b9e93690b7dacad8fbb22f71b8a3940e04d
 .. _django-selectable: https://bitbucket.org/mlavin/django-selectable
 .. _select2: http://ivaynberg.github.com/select2/index.html
