@@ -52,9 +52,7 @@ How to include static assets?
 There are at least 2 ways of including static assets to work with django-selectable-select2.
 Both of them assumes that jQuery is already included.
 
-* First of all you can use the form's `media` attribute to include appropriate js and css files.
-
-Like so::
+* First of all you can use the form's `media` attribute to include appropriate js and css files. Like so::
 
     <html>
         <head>
@@ -72,9 +70,9 @@ Like so::
         </body>
     </html>
 
-    .. note::
-        The `form.media.js` also includes the `jquery.django.admin.fix.js`_ to work with django admin panel.
-        You may not need this.
+  .. note::
+      The `form.media.js` also includes the `jquery.django.admin.fix.js` to work with django admin panel.
+      You may not need this.
 
 * Or you can mannually include those assets (assuming you're using django-staticfiles). Like so::
 
@@ -124,7 +122,6 @@ for their projects, their support and quick response time in resolving my issues
 .. _Igor Vaynberg: https://github.com/ivaynberg
 .. _Mark Lavin: https://bitbucket.org/mlavin
 
-.. _jquery.django.admin.fix.js:
 .. _7baa3b9e9: https://github.com/ivaynberg/select2/commit/7baa3b9e93690b7dacad8fbb22f71b8a3940e04d
 .. _django-selectable: https://bitbucket.org/mlavin/django-selectable
 .. _select2: http://ivaynberg.github.com/select2/index.html
