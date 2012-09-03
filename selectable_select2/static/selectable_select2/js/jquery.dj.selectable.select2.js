@@ -3,7 +3,7 @@
 
     var djs2limit = 20;
 
-    var $selectitems = $("[data-selectable-type]=select2");
+    var $selectitems = $("[data-selectable-type=select2]");
     $selectitems.each( function(index) {
         var $selectitem = $(this);
         var djs2url = $selectitem.data('selectableUrl');
