@@ -47,12 +47,12 @@ class OwnerLookup(ModelLookup):
 registry.register(OwnerLookup)
 
 
-class CityLookup(ModelLookup):
+class CityChainedLookup(ModelLookup):
     model = City
     search_fields = ('name__icontains', )
 
     def get_query(self, request, term):
-        results = super(CityLookup, self).get_query(request, term)
+        results = super(CityChainedLookup, self).get_query(request, term)
         state = request.GET.get('state', '')
 
         # support for second field
@@ -68,7 +68,17 @@ class CityLookup(ModelLookup):
     def get_item_label(self, item):
         return u"%s, %s" % (item.name, item.state)
 
+
+class CityLookup(ModelLookup):
+    model = City
+    search_fields = ('name__icontains', )
+
+    def get_item_label(self, item):
+        return u"%s, %s" % (item.name, item.state)
+
+
 registry.register(CityLookup)
+registry.register(CityChainedLookup)
 
 
 class StateLookup(LookupBase):

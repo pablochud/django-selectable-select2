@@ -4,12 +4,12 @@ from selectable_select2.widgets import AutoCompleteSelect2Widget
 
 class Select2DependencyFormMixin(object):
 
-    # a dict of dependencies in form:
-    # '<fieldname>' : { 'parents' : ['list', 'of', 'parent', fieldnames'], 'clearonparentchange' : True/False }
-    select2_deps = {}
+    # a tuple of two-tuples of dependencies in form:
+    # ('<fieldname>', { 'parents' : ['list', 'of', 'parent', fieldnames'], 'clearonparentchange' : True/False })
+    select2_deps = tuple()
 
     def apply_select2_deps(self):
-        for field, opts in self.select2_deps.items():
+        for field, opts in self.select2_deps:
             parents_list = []
             fo  = self.fields[field]  # get a field object
             #bfo = self[field]         # get a bound field object

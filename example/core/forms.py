@@ -1,13 +1,13 @@
 from django import forms
 from django.forms.models import modelformset_factory
-from django.contrib.localflavor.us.forms import USStateField, USStateSelect
+from django.contrib.localflavor.us.forms import USStateSelect  # , USStateField
 
 import selectable.forms as selectable
 
-from example.core.lookups import FruitLookup, CityLookup, FancyFruitLookup, StateLookup
-from example.core.models import Farm, ReferencesTest, City
+from example.core.lookups import FruitLookup, CityLookup, CityChainedLookup, FancyFruitLookup, StateLookup
+from example.core.models import Farm, ReferencesTest  # , City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
-from selectable_select2.forms import Select2DependencyFormMixin
+# from selectable_select2.forms import Select2DependencyFormMixin
 from selectable_select2.forms import Select2DependencyForm
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
@@ -17,7 +17,7 @@ class ReferencesTestForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ReferencesTestForm, self).__init__(*args, **kwargs)
         ct = self.fields['city']
-        ct.widget = Select2Widget(CityLookup, placeholder="select a state", limit=20)
+        ct.widget = Select2Widget(CityLookup, placeholder="select a city", limit=20)
 
     class Meta:
         model = ReferencesTest
@@ -39,10 +39,10 @@ class ChainedForm(forms.Form):
             widget=USStateSelect,
             required=False)
 
-    # city = selectable.AutoComboboxSelectField(lookup_class=CityLookup, label='City', required=False, )
-    city = forms.ModelChoiceField(empty_label= "", queryset=CityLookup().get_queryset(),
+    # city = selectable.AutoComboboxSelectField(lookup_class=CityChainedLookup, label='City', required=False, )
+    city = forms.ModelChoiceField(empty_label= "", queryset=CityChainedLookup().get_queryset(),
         widget=Select2Widget(
-            CityLookup,
+            CityChainedLookup,
             placeholder="select a city",
             parents="id_state,id_state2",
             clearonparentchange=True))
@@ -60,11 +60,13 @@ class ChainedForm2(Select2DependencyForm):
             widget=USStateSelect,
             required=False)
 
-    # city = selectable.AutoComboboxSelectField(lookup_class=CityLookup, label='City', required=False, )
-    city = forms.ModelChoiceField(empty_label= "", queryset=CityLookup().get_queryset(),
-        widget=Select2Widget(CityLookup, placeholder="select a city"))
+    # city = selectable.AutoComboboxSelectField(lookup_class=CityChainedLookup, label='City', required=False, )
+    city = forms.ModelChoiceField(empty_label= "", queryset=CityChainedLookup().get_queryset(),
+        widget=Select2Widget(CityChainedLookup, placeholder="select a city"))
 
-    select2_deps = { 'city' : { 'parents' : ['state', 'state2'] } }
+    select2_deps = (
+        ('city', { 'parents' : ['state', 'state2'] } ),
+     )
 
 
 class FarmForm(forms.ModelForm):
