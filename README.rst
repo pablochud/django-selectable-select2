@@ -11,10 +11,15 @@ It also provides it's own Lookup classes for better (IMO) serialization results 
 
 For now there's only a basic single-valued autocomplete widget for usage on ForeignKey (or simply ModelChoiceField) fields.
 
-Installation and usage
-=========================
+Installation
+=============
+
 
 * install `django-selectable`_ (you can ommit the part regarding jquery-ui)
+
+* install `django-selectable-select2` like so::
+
+    pip install django-selectable-select2
 
 * add `selectable_select2` to `INSTALLED_APPS`. So it look like this::
 
@@ -24,6 +29,9 @@ Installation and usage
         'selectable_select2',
         ...
     )
+
+Usage
+============
 
 * define your `lookup class`_
 
@@ -71,7 +79,7 @@ Both of them assumes that jQuery is already included.
     </html>
 
   .. note::
-      The `form.media.js` also includes the `jquery.django.admin.fix.js` to work with django admin panel.
+      The ``{{ form.media.js }}`` also includes the ``jquery.django.admin.fix.js`` to work with django admin panel.
       You may not need this.
 
 * Or you can mannually include those assets (assuming you're using django-staticfiles). Like so::
@@ -93,7 +101,61 @@ Both of them assumes that jQuery is already included.
         </body>
     </html>
 
+Chained selects
+----------------
+
+There is a way to do chained selects in `django-selectable`.
+Check out the `docs about chained selects`_ to correctly prepare your lookup classes
+for this use case (you can skip the javascript part).
+Django-selectable-select2 provides a helper class to declare dependencies of your chained selects
+on your form.
+
+So given the lookup, from the above link and assuming that MyModel has ForeignKeys
+for city and state, your form class can inherit from ``Select2DependencyModelForm``
+and define ``select2_deps`` attribute like this::
+
+    from selectable_select2.forms import Select2DependencyModelForm
+    from django import forms
+    from selectable_select2.widgets import AutoCompleteSelect2Widget
+
+    class ChainedForm(Select2DependencyModelForm):
+
+        select2_deps = (
+            ('city', { 'parents' : ['state'] }),
+        )
+
+        class Meta:
+            model = MyModel
+            widgets = {
+                'city' : AutoCompleteSelect2Widget(CityLookup, placeholder='select city')
+            }
+
+There is also ``Select2DependencyForm`` which is suitable for non-model based forms.
+
+.. note::
+    Both ``Select2DependencyModelForm`` and ``Select2DependencyForm``
+    in ``selectable_select2.forms`` module inherit from a general class called
+    ``Select2DependencyFormMixin`` which defines one method called ``apply_select2_deps``.
+    Don't hesitate to browse the source of those classes.
+
+
+``select2_deps`` is a tuple of two-tuples in form `('<fieldname>' : { <options dict> })`
+where the `options dict` is a Python dictionary that configurates the dependencies for that field.
+
+Reference for the `options dict`:
+
+parents
+    List of field names that are superior for the given field.
+    Like in the above example you can choose a `city` depending on what `state` you've chosen.
+    The field can be dependant from more than one parent.
+
+clearonparentchange
+    Boolean (True/False) that indicates whether a field should be cleared when a user
+    changes the selection/value of one of it's parents.
+
+
 Check the `example` project for more details.
+
 
 TODO
 ======
@@ -122,6 +184,7 @@ for their projects, their support and quick response time in resolving my issues
 .. _Igor Vaynberg: https://github.com/ivaynberg
 .. _Mark Lavin: https://bitbucket.org/mlavin
 
+.. _docs about chained selects: http://django-selectable.readthedocs.org/en/latest/advanced.html#chained-selection
 .. _7baa3b9e9: https://github.com/ivaynberg/select2/commit/7baa3b9e93690b7dacad8fbb22f71b8a3940e04d
 .. _django-selectable: https://bitbucket.org/mlavin/django-selectable
 .. _select2: http://ivaynberg.github.com/select2/index.html

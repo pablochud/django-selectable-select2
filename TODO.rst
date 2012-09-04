@@ -4,6 +4,7 @@ TODO list of django-selectable-select2
 tasks to be done
 -----------------
 
+* make a possibility to add names sent via ajax for more flexible chained lookups
 * support ManyToMany (i.e. multiple choices)
 * support FormSets
 * support allow_new option
