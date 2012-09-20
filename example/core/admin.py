@@ -11,7 +11,7 @@ from example.core.forms import ReferencesTestForm
 
 
 class FarmAdminForm(forms.ModelForm):
-    owner = selectable.AutoComboboxSelectField(lookup_class=OwnerLookup, allow_new=True)
+    #owner = selectable.AutoComboboxSelectField(lookup_class=OwnerLookup, allow_new=True)
 
     class Meta(object):
         model = Farm
