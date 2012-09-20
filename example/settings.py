@@ -3,6 +3,8 @@ import os
 
 PROJECT_PATH = os.path.dirname(__file__)
 
+SELECTABLE_ESCAPED_KEYS = ('label', 'value')
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 

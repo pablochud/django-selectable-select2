@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 
-from selectable_select2.base import ModelLookup, LookupBase
+# from selectable_select2.base import ModelLookup, LookupBase
+from selectable.base import ModelLookup, LookupBase
 from selectable.registry import registry
 
 from example.core.models import Fruit, City
@@ -66,7 +67,7 @@ class CityChainedLookup(ModelLookup):
         return results
 
     def get_item_label(self, item):
-        return u"%s, %s" % (item.name, item.state)
+        return u"{0}, {1}".format(item.name, item.state)
 
 
 class CityLookup(ModelLookup):
@@ -74,7 +75,7 @@ class CityLookup(ModelLookup):
     search_fields = ('name__icontains', )
 
     def get_item_label(self, item):
-        return u"%s, %s" % (item.name, item.state)
+        return u"{0}, {1}".format(item.name, item.state)
 
 
 registry.register(CityLookup)

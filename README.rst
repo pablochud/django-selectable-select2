@@ -7,7 +7,6 @@ django-selectable-select2
 This project is a kind of a plugin for `django-selectable`_.
 
 It provides widgets for use with a great JS library called `select2`_ rather than jQuery UI.
-It also provides it's own Lookup classes for better (IMO) serialization results and limiting results (on server side).
 
 For now there's only a basic single-valued autocomplete widget for usage on ForeignKey (or simply ModelChoiceField) fields.
 
@@ -29,6 +28,11 @@ Installation
         'selectable_select2',
         ...
     )
+
+* add/change a setting ``SELECTABLE_ESCAPED_KEYS`` like this::
+
+    SELECTABLE_ESCAPED_KEYS = ('label', 'value')
+
 
 Usage
 ============
@@ -162,6 +166,11 @@ TODO
 
 check out `TODO.rst`
 
+A note about version of django-selectable
+===========================================
+
+The minimal version of django-selectable that is required for this app is
+0.6
 
 A note about version of select2.js used here
 ==============================================

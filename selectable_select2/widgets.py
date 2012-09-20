@@ -8,7 +8,7 @@ __all__ = ('AutoCompleteSelect2Widget',)
 
 MEDIA_URL = settings.MEDIA_URL
 STATIC_URL = getattr(settings, 'STATIC_URL', u'')
-MEDIA_PREFIX = u'%sselectable_select2/' % (STATIC_URL or MEDIA_URL)
+MEDIA_PREFIX = u'{0}selectable_select2/'.format(STATIC_URL or MEDIA_URL)
 
 # these are the kwargs that u can pass when instantiating the widget
 TRANSFERABLE_ATTRS = ('placeholder', 'initial_selection', 'parents', 'clearonparentchange')
@@ -21,12 +21,12 @@ class SelectableSelect2MediaMixin(object):
 
     class Media(object):
         css = {
-            'all': (u'%scss/select2.css' % MEDIA_PREFIX,)
+            'all': (u'{0}css/select2.css'.format(MEDIA_PREFIX),)
         }
         js = (
-            u'%sjs/jquery.django.admin.fix.js' % MEDIA_PREFIX,
-            u'%sjs/select2.min.js' % MEDIA_PREFIX,
-            u'%sjs/jquery.dj.selectable.select2.js' % MEDIA_PREFIX,
+            u'{0}js/jquery.django.admin.fix.js'.format(MEDIA_PREFIX),
+            u'{0}js/select2.min.js'.format(MEDIA_PREFIX),
+            u'{0}js/jquery.dj.selectable.select2.js'.format(MEDIA_PREFIX),
         )
 
 
@@ -45,7 +45,7 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
             attr = real_attr.replace('_', '-')
             value = getattr(self, real_attr)
             if real_attr in SERIALIZABLE_ATTRS:
-                value = json.dumps(value).strip('"')
+                value = json.dumps(value)
             attrs[u'data-' + attr] = value
 
         attrs[u'data-selectable-type'] = 'select2'

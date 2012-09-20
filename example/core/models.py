@@ -17,7 +17,7 @@ class Farm(models.Model):
     fruit = models.ManyToManyField(Fruit)
 
     def __unicode__(self):
-        return u"%s's Farm: %s" % (self.owner.username, self.name)
+        return u"{0}'s Farm: {1}".format(self.owner.username, self.name)
 
 
 class City(models.Model):
@@ -39,7 +39,7 @@ class ReferencesTest(models.Model):
         return ('example-detail', [str(self.id)])
 
     def __unicode__(self):
-        ret = u"%s: %s - %s - %s" % (str(self.pk), self.city, self.fruit, self.fruit2)
+        ret = u"{0}: {1} - {2} - {3}".format(str(self.pk), self.city, self.fruit, self.fruit2)
         if self.farm:
-            ret += u" - %s" % self.farm
+            ret += u" - {0}".format(self.farm)
         return ret
