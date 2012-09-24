@@ -18,8 +18,13 @@ class Select2DependencyFormMixin(object):
 
             for parent_fname in opts.get('parents', []):
                 parents_list.append(self[parent_fname].auto_id)  # from a bound field get an HTML id
-            fo.widget.parents = ",".join(parents_list)
+            fo.widget.parent_ids = ",".join(parents_list)
             fo.widget.clearonparentchange = bool(opts.get('clearonparentchange', True))
+
+            parent_namemap = {}
+            for fname, pname in opts.get('parents_namemap', {}).items():
+                parent_namemap[self[fname].auto_id] = pname
+            fo.widget.parent_namemap = parent_namemap
 
 
 class Select2DependencyForm(Select2DependencyFormMixin, forms.Form):

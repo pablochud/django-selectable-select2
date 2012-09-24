@@ -151,12 +151,27 @@ Reference for the `options dict`:
 parents
     List of field names that are superior for the given field.
     Like in the above example you can choose a `city` depending on what `state` you've chosen.
-    The field can be dependant from more than one parent.
+    The field can be dependant from more than one parent. Defaults to: **[]**.
 
 clearonparentchange
     Boolean (True/False) that indicates whether a field should be cleared when a user
-    changes the selection/value of one of it's parents.
+    changes the selection/value of one of it's parents. Defaults to: **True**.
 
+parents_namemap
+    A convenient option (python dictionary) for indicating which key name is sent via ajax for which parent.
+    E.g. Assume that field ``child`` depends on ``parent1`` and ``parent2`` in our
+    chained selects. You can specify::
+
+        select2_deps = (
+            ('child', {
+                parents : ['parent1', 'parent2' ]
+                parents_namemap : { 'parent1' : 'parent', 'parent2' : 'parent' }
+            }),
+        )
+
+    Then your lookup can be cleaner and you can search only for ``parent`` key
+    instead of juggling with ``parent1`` and ``parent2`` in your ``get_query``
+    method. Defaults to: **{}**.
 
 Check the `example` project for more details.
 

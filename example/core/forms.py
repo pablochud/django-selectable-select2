@@ -43,9 +43,12 @@ class ChainedForm(forms.Form):
     city = forms.ModelChoiceField(empty_label= "", queryset=CityChainedLookup().get_queryset(),
         widget=Select2Widget(
             CityChainedLookup,
-            placeholder="select a city",
-            parents="id_state,id_state2",
-            clearonparentchange=True))
+            placeholder = "select a city",
+            parent_ids = "id_state,id_state2",
+            clearonparentchange = True,
+            parent_namemap = {'id_state' : 'state', 'id_state2' : 'state' }
+            )
+        )
 
 
 class ChainedForm2(Select2DependencyForm):
@@ -65,7 +68,10 @@ class ChainedForm2(Select2DependencyForm):
         widget=Select2Widget(CityChainedLookup, placeholder="select a city"))
 
     select2_deps = (
-        ('city', { 'parents' : ['state', 'state2'] } ),
+        ('city', {
+                    'parents' : ['state', 'state2'],
+                    'parents_namemap' : { 'state2' : 'state' },
+                }),
      )
 
 

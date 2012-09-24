@@ -11,10 +11,13 @@ STATIC_URL = getattr(settings, 'STATIC_URL', u'')
 MEDIA_PREFIX = u'{0}selectable_select2/'.format(STATIC_URL or MEDIA_URL)
 
 # these are the kwargs that u can pass when instantiating the widget
-TRANSFERABLE_ATTRS = ('placeholder', 'initial_selection', 'parents', 'clearonparentchange')
+TRANSFERABLE_ATTRS = ('placeholder', 'initialselection', 'parent_ids', 'clearonparentchange', 'parent_namemap')
 
-# a subset of TRANSFERABLE_ATTRS that should be serialized on "data-*" attrs
+# a subset of TRANSFERABLE_ATTRS that should be serialized on "data-djsels2-*" attrs
 SERIALIZABLE_ATTRS = ('clearonparentchange',)
+
+# a subset of TRANSFERABLE_ATTRS that should be serialize on "data-*" attrs
+EXPLICIT_TRANSFERABLE_ATTRS = ('placeholder',)
 
 
 class SelectableSelect2MediaMixin(object):
@@ -44,22 +47,36 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
         for real_attr in TRANSFERABLE_ATTRS:
             attr = real_attr.replace('_', '-')
             value = getattr(self, real_attr)
+
+            # because django widget can't properly output json in his attrs
+            # so we're flattening the map into string of comma delimitted strings
+            # in form "key0,value0,key1,value1,..."
+            if real_attr == 'parent_namemap':
+                if isinstance(value, dict):
+                    value_copy = value.copy()
+                    value = []
+                    for k, v in value_copy.items():
+                        value.extend([k, v])
+                value = ",".join(value)
+
             if real_attr in SERIALIZABLE_ATTRS:
                 value = json.dumps(value)
-            attrs[u'data-' + attr] = value
+            attrs[u'data-djsels2-' + attr] = value
+            if real_attr in EXPLICIT_TRANSFERABLE_ATTRS:
+                attrs[u'data-' + attr] = value
 
         attrs[u'data-selectable-type'] = 'select2'
 
         return attrs
 
     def render(self, name, value, attrs=None):
-        # when there is a value and no initial_selection was passed to the widget
-        if value is not None and (self.initial_selection is None or self.initial_selection == ''):
+        # when there is a value and no initialselection was passed to the widget
+        if value is not None and (self.initialselection is None or self.initialselection == ''):
             lookup = self.lookup_class()
             item = lookup.get_item(value)
             if item is not None:
-                initial_selection = lookup.get_item_value(item)
-                self.initial_selection = initial_selection
+                initialselection = lookup.get_item_value(item)
+                self.initialselection = initialselection
         return super(Select2BaseWidget, self).render(name, value, attrs)
 
 
