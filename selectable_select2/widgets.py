@@ -16,7 +16,7 @@ TRANSFERABLE_ATTRS = ('placeholder', 'initialselection', 'parent_ids', 'clearonp
 # a subset of TRANSFERABLE_ATTRS that should be serialized on "data-djsels2-*" attrs
 SERIALIZABLE_ATTRS = ('clearonparentchange',)
 
-# a subset of TRANSFERABLE_ATTRS that should be serialize on "data-*" attrs
+# a subset of TRANSFERABLE_ATTRS that should be also on "data-*" attrs
 EXPLICIT_TRANSFERABLE_ATTRS = ('placeholder',)
 
 
