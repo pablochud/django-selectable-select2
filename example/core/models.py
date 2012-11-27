@@ -36,10 +36,25 @@ class ReferencesTest(models.Model):
 
     @models.permalink
     def get_absolute_url(self):
-        return ('example-detail', [str(self.id)])
+        return ('example-detail', [str(self.pk)])
 
     def __unicode__(self):
         ret = u"{0}: {1} - {2} - {3}".format(str(self.pk), self.city, self.fruit, self.fruit2)
         if self.farm:
             ret += u" - {0}".format(self.farm)
         return ret
+
+
+class MultipleTest(models.Model):
+    something = models.CharField(max_length=100, null=True, blank=True)
+    multiple  = models.ManyToManyField(Fruit)
+
+    def __unicode__(self):
+        ret = u"{0}:".format(self.pk)
+        if self.something:
+            ret += " {0}".format(self.something)
+        return ret
+
+    @models.permalink
+    def get_absolute_url(self):
+        return ('example-multiple', [str(self.pk)])

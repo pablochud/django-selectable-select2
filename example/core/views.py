@@ -3,8 +3,8 @@ from django.template import RequestContext
 
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm, ChainedForm2
-from example.core.models import ReferencesTest
+from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm, ChainedForm2, MultipleTestForm
+from example.core.models import ReferencesTest, MultipleTest
 
 
 def add(request):
@@ -72,3 +72,33 @@ def formset(request):
             formset = FarmFormset()
 
     return render_to_response('formset.html', {'formset': formset}, context_instance=RequestContext(request))
+
+
+def multiple(request):
+
+    form = MultipleTestForm()
+    if request.method == 'POST':
+        print "RPD", request.raw_post_data
+        form = MultipleTestForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("example-multiple-list"))
+    return render_to_response('base.html', {'form': form}, context_instance=RequestContext(request))
+
+
+def multiple_edit(request, pk):
+
+    instance = MultipleTest.objects.get(pk=pk)
+    form = MultipleTestForm(instance=instance)
+    if request.method == 'POST':
+        print "RPD", request.raw_post_data
+        form = MultipleTestForm(request.POST, instance=instance)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("example-multiple-list"))
+    return render_to_response('base.html', {'form': form}, context_instance=RequestContext(request))
+
+
+def multiple_list(request):
+    rlist = MultipleTest.objects.all()
+    return render_to_response('list.html', {'object_list': rlist}, context_instance=RequestContext(request))

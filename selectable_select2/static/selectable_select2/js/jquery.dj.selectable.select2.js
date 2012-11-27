@@ -3,10 +3,12 @@
 
     var djsels2limit = 20;
 
-    var $selectitems = $("[data-selectable-type=select2]");
+    var $selectitems = $("[data-selectable-type^=select2]");
     $selectitems.each( function(index) {
         var loading_more = ""; // a string for indicating of loading more results
         var $selectitem = $(this);
+        var selectable_type = $selectitem.data('selectableType');
+        var is_multiple = (selectable_type === "select2_multiple") ? true : false;
         var djs2url = $selectitem.data('selectableUrl');
         var clearonparentchange = $selectitem.data('djsels2Clearonparentchange');
 
@@ -21,11 +23,8 @@
                 /* attach a "clear child" action to parents */
                 if (clearonparentchange) {
                   el.change(function(evo) {
-                    var val = false;
-                    if (!val) {
                       $selectitem.data('select2').clear();
                       $selectitem.trigger('change');
-                    }
                   });
                 }
               }
@@ -63,8 +62,9 @@
           return obj;
         };
 
-        $selectitem.select2({
+        var single_config_object = {
             // minimumInputLength : 1,
+            multiple         :  is_multiple,
             width            :  'resolve',
             minimumResultsForSearch: djsels2limit,
             allowClear       :  true,
@@ -88,15 +88,34 @@
             initSelection    :  function (element, callback) {
                                   /** TODO: adjust this to work with multiple selection */
                                     var data = {};
+                                    console.log("element", element);
                                     var el_val = element.val();
-                                    var initial_selection = element.data('djsels2Initialselection');
+                                    console.log("elval", el_val, typeof el_val);
+                                    var initial_selection = element.data('djsels2InitialselectionNo0');
+                                    console.log("initsel", initial_selection);
                                     if (initial_selection) {
                                       data = {
-                                        id : el_val,
+                                        id : is_multiple ? el_val[0] : el_val,
                                         value : initial_selection
                                       };
+                                      console.log('data', data);
                                     }
-
+                                    if (is_multiple) {
+                                      data = [data];
+                                      var _is_more = true;
+                                      var _index = 1;
+                                      while (_is_more) {
+                                        var another_initial_selection = element.data('djsels2InitialselectionNo' + _index);
+                                        if (typeof another_initial_selection === "undefined") {
+                                          _is_more = false;
+                                        } else {
+                                          var _to_push = { id: el_val[_index], value: another_initial_selection } ;
+                                          console.log('topush', _to_push);
+                                          data.push(_to_push);
+                                          _index++;
+                                        }
+                                      }
+                                    }
                                     callback(data);
                                 },
             formatResult     :  function (state) {
@@ -109,7 +128,9 @@
               return loading_more;
             },
             escapeMarkup: function(markup) { return markup; }
-        });
+        };
+
+        $selectitem.select2(single_config_object);
      });
   });
 })(jQuery);

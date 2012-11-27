@@ -10,7 +10,7 @@
     </style>
     <link rel="stylesheet" href="{{ STATIC_URL }}css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
-    {{ form.media.css }}
+    <link rel="stylesheet" href="{{ STATIC_URL }}selectable_select2/css/select2.css">
     {% block extra-css %}{% endblock %}
 </head>
 <body>
@@ -29,6 +29,10 @@
                         <li class="active"><a href="/advanced/">Chained</a></li>
                         <li class="active"><a href="/advanced2/">Chained2</a></li>
                         {# <li class="active"><a href="/formset/">Formset</a></li> #}
+                        <li class="divider-vertical"></li>
+                        <li class="active"><a href="/listm/">List (multiple)</a></li>
+                        <li class="active"><a href="/multiple/">Add (multiple)</a></li>
+
                     </ul>
                 </div><!--/.nav-collapse -->
             </div>
@@ -63,8 +67,9 @@
     </div>
     {% endblock %}
     </div>
-    {% include_jquery_libs %}
-    {{ form.media.js }}
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
+        <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/jquery.dj.selectable.select2.js"></script>
     {% block extra-js %}{% endblock %}
 </body>
 </html>

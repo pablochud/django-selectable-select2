@@ -5,8 +5,9 @@ from django.contrib.localflavor.us.forms import USStateSelect  # , USStateField
 import selectable.forms as selectable
 
 from example.core.lookups import FruitLookup, CityLookup, CityChainedLookup, FancyFruitLookup, StateLookup
-from example.core.models import Farm, ReferencesTest  # , City
+from example.core.models import Farm, ReferencesTest, MultipleTest  # , City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
+from selectable_select2.widgets import AutoCompleteMultipleSelect2Widget as Select2MultipleWidget
 # from selectable_select2.forms import Select2DependencyFormMixin
 from selectable_select2.forms import Select2DependencyForm
 from django.contrib.localflavor.us.us_states import STATE_CHOICES
@@ -73,6 +74,16 @@ class ChainedForm2(Select2DependencyForm):
                     'parents_namemap' : { 'state2' : 'state' },
                 }),
      )
+
+
+class MultipleTestForm(forms.ModelForm):
+
+    class Meta:
+        model = MultipleTest
+        widgets = {
+            #'something' : Select2Widget(lookup_class=FancyFruitLookup, placeholder="select multiple fruits"),
+            'multiple' : Select2MultipleWidget(lookup_class=FancyFruitLookup, placeholder="select multiple fruits"),
+        }
 
 
 class FarmForm(forms.ModelForm):
