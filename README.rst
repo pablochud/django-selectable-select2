@@ -1,6 +1,11 @@
 django-selectable-select2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. _issue in select2: https://github.com/ivaynberg/select2/issues/466
+
+.. warning::
+    This project has been **suspended** due to an `issue in select2`_ not supporting mobile devices.
+
 .. warning::
     This is still a work in progress. Some backwards incompatible changes may happen between releases.
 
@@ -90,7 +95,7 @@ Both of them assumes that jQuery is already included.
 
     <html>
         <head>
-            <link rel="stylesheet" href="{{ STATIC_URL }}selectable_select2/js/select2.css">
+            <link rel="stylesheet" href="{{ STATIC_URL }}selectable_select2/css/select2.css">
         </head>
 
         <body>
