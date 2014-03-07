@@ -23,12 +23,8 @@ EXPLICIT_TRANSFERABLE_ATTRS = ('placeholder',)
 class SelectableSelect2MediaMixin(object):
 
     class Media(object):
-        css = {
-            'all': (u'{0}css/select2.css'.format(MEDIA_PREFIX),)
-        }
         js = (
             u'{0}js/jquery.django.admin.fix.js'.format(MEDIA_PREFIX),
-            u'{0}js/select2.min.js'.format(MEDIA_PREFIX),
             u'{0}js/jquery.dj.selectable.select2.js'.format(MEDIA_PREFIX),
         )
 

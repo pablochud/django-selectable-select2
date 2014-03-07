@@ -36,6 +36,22 @@ Installation
     SELECTABLE_ESCAPED_KEYS = ('label', 'value')
 
 
+You can also get all the static files dependencies like this::
+
+    pip install django-staticfiles-jquery
+    pip install django-staticfiles-select2
+
+and add them to ``INSTALLED_APPS``::
+
+    INSTALLED_APPS = (
+        ...
+        'jquery',
+        'staticfiles_select2',
+        ...
+    )
+
+
+
 Usage
 ============
 
@@ -60,14 +76,16 @@ Usage
 How to include static assets?
 ----------------------------------
 
-There are at least 2 ways of including static assets to work with django-selectable-select2.
-Both of them assumes that jQuery is already included.
+.. warning::
 
-* First of all you can use the form's `media` attribute to include appropriate js and css files. Like so::
+    As of version 0.4.0 `django-selectable-select2` doesn't include any static files dependencies for select2 itself.
+    Use `django-staticfiles-select2` and/or `django-staticfiles-jquery` if you don't have them already in your project.
+
+You can mannually include those assets (assuming you're using django-staticfiles). Like so::
 
     <html>
         <head>
-            {{ form.media.css }}
+            <link rel="stylesheet" href="{{ STATIC_URL }}staticfiles_select2/select2/select2.css">
         </head>
 
         <body>
@@ -77,29 +95,7 @@ Both of them assumes that jQuery is already included.
             </form>
 
             <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-            {{ form.media.js }}
-        </body>
-    </html>
-
-  .. note::
-      The ``{{ form.media.js }}`` also includes the ``jquery.django.admin.fix.js`` to work with django admin panel.
-      You may not need this.
-
-* Or you can mannually include those assets (assuming you're using django-staticfiles). Like so::
-
-    <html>
-        <head>
-            <link rel="stylesheet" href="{{ STATIC_URL }}selectable_select2/css/select2.css">
-        </head>
-
-        <body>
-            <form action="." method="post">
-                {{ form.as_p }}
-                <p><button type="submit">Submit</button></p>
-            </form>
-
-            <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-            <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
+            <script type="text/javascript" src="{{ STATIC_URL }}staticfiles_select2/select2/select2.min.js"></script>
             <script type="text/javascript" src="{{ STATIC_URL }}selectable_select2/js/jquery.dj.selectable.select2.js"></script>
         </body>
     </html>
