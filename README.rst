@@ -4,9 +4,6 @@ django-selectable-select2
 .. _issue in select2: https://github.com/ivaynberg/select2/issues/466
 
 .. warning::
-    This project has been **suspended** due to an `issue in select2`_ not supporting mobile devices.
-
-.. warning::
     This is still a work in progress. Some backwards incompatible changes may happen between releases.
 
 This project is a kind of a plugin for `django-selectable`_.
@@ -43,9 +40,6 @@ Usage
 ============
 
 * define your `lookup class`_
-
-.. warning::
-    as for now (until `issue #64`_ is resolved) you should inherit from ``selectable_select2.base.LookupBase`` and ``selectable_select2.base.ModelLookup``
 
 * in your forms you can use ``selectable_select2.widgets.AutoCompleteSelect2Widget`` like so::
 
@@ -189,20 +183,7 @@ check out `TODO.rst`
 A note about version of django-selectable
 ===========================================
 
-The minimal version of django-selectable that is required for this app is
-0.6
-
-A note about version of select2.js used here
-==============================================
-
-django-selectable-select2 comes bundled with "unstable" version of `select2`_.
-This version is above commit `7baa3b9e9`_ (the unstable and unreleased 3.2 version)
-where you can provide your own function to escape the markup.
-If you want to use this version (e.g. on other select widgets in your project) do it like this::
-
-    <script src="{{ STATIC_URL }}selectable_select2/js/select2.min.js"></script>
-
-See https://github.com/ivaynberg/select2/pull/355 for details.
+The minimal version of django-selectable that is required for this app is 0.7
 
 Credits
 ==========
