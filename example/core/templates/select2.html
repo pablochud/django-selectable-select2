@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
     <link rel="stylesheet" href="http://ivaynberg.github.com/select2/select2-2.1/select2.css">
     {#{ form.media.css }#}
-    
+
     {% block extra-css %}{% endblock %}
 </head>
 <body>
@@ -49,7 +49,7 @@
     {% endblock %}
     </div>
     {% include_jquery_libs %}
-    <script type="text/javascript" charset="utf-8" src="http://ivaynberg.github.com/select2/select2-2.1/select2.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}staticfiles_select2/select2/select2.min.js"></script>
     {#{ form.media.js }#}
     {% block extra-js %}
     <script>
@@ -67,11 +67,11 @@
                                   data : function (term, page, context) {
                                        console.log("CONTEXT");
                                        console.log(context);
-                                       return { 'term' : term, limit: djs2limit, page: page }
+                                       return { 'term' : term, limit: djs2limit, page: page };
                                   },
                                   results : function (data, page) {
-                                       var more = (page * djs2limit) < data.meta.total
-                                       return { results : data.data, more : more }
+                                       var more = (page * djs2limit) < data.meta.total;
+                                       return { results : data.data, more : more };
                                   }
                                },
              formatResult    : function (state) { return state.label },

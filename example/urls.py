@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import patterns, include, url
+from django.conf.urls import patterns, include, url
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static    import static
@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
     (r'^selectable/', include('selectable.urls')),
-    url(r'^', include('example.core.urls')),
+    url(r'^', include('core.urls')),
 )
 
 urlpatterns += staticfiles_urlpatterns()

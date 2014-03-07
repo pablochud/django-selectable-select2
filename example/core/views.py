@@ -3,8 +3,8 @@ from django.template import RequestContext
 
 from django.http import HttpResponseRedirect
 from django.core.urlresolvers import reverse
-from example.core.forms import ChainedForm, FarmFormset, ReferencesTestForm, ChainedForm2
-from example.core.models import ReferencesTest
+from .forms import ChainedForm, FarmFormset, ReferencesTestForm, ChainedForm2
+from .models import ReferencesTest
 
 
 def add(request):

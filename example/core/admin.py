@@ -5,9 +5,9 @@ from django import forms
 
 import selectable.forms as selectable
 
-from example.core.models import Fruit, Farm, ReferencesTest
-from example.core.lookups import FruitLookup, OwnerLookup
-from example.core.forms import ReferencesTestForm
+from .models import Fruit, Farm, ReferencesTest
+from .lookups import FruitLookup, OwnerLookup
+from .forms import ReferencesTestForm
 
 
 class FarmAdminForm(forms.ModelForm):

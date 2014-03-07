@@ -1,7 +1,7 @@
-from django.conf.urls.defaults import patterns, url
+from django.conf.urls import patterns, url
 
 
-urlpatterns = patterns('example.core.views',
+urlpatterns = patterns('core.views',
     url(r'^formset/$',   'formset',  name='example-formset'),
     url(r'^advanced/$',  'advanced', name='example-advanced'),
     url(r'^advanced2/$', 'advanced', {'form_type' : 2},  name='example-advanced'),

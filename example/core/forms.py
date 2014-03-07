@@ -1,15 +1,15 @@
 from django import forms
 from django.forms.models import modelformset_factory
-from django.contrib.localflavor.us.forms import USStateSelect  # , USStateField
+from localflavor.us.forms import USStateSelect  # , USStateField
+from localflavor.us.us_states import STATE_CHOICES
 
 import selectable.forms as selectable
 
-from example.core.lookups import FruitLookup, CityLookup, CityChainedLookup, FancyFruitLookup, StateLookup
-from example.core.models import Farm, ReferencesTest  # , City
+from .lookups import FruitLookup, CityLookup, CityChainedLookup, FancyFruitLookup, StateLookup
+from .models import Farm, ReferencesTest  # , City
 from selectable_select2.widgets import AutoCompleteSelect2Widget as Select2Widget
 # from selectable_select2.forms import Select2DependencyFormMixin
 from selectable_select2.forms import Select2DependencyForm
-from django.contrib.localflavor.us.us_states import STATE_CHOICES
 
 
 class ReferencesTestForm(forms.ModelForm):

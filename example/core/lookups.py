@@ -4,10 +4,10 @@ from django.contrib.auth.models import User
 from selectable.base import ModelLookup, LookupBase
 from selectable.registry import registry
 
-from example.core.models import Fruit, City
+from .models import Fruit, City
 from django import template
 
-from django.contrib.localflavor.us.us_states import STATE_CHOICES
+from localflavor.us.us_states import STATE_CHOICES
 
 
 class FruitLookup(ModelLookup):

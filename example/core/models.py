@@ -1,4 +1,4 @@
-from django.contrib.localflavor.us.models import USStateField
+from localflavor.us.models import USStateField
 from django.db import models
 
 
