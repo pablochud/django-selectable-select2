@@ -10,3 +10,7 @@ build
 dist
 django_selectable_select2.egg-info
 
+example/django
+example/selectable
+example/localflavor
+example/jquery
