@@ -2,7 +2,7 @@ from selectable.forms.widgets import AutoCompleteWidget
 from django.conf import settings
 
 from django.utils import simplejson as json
-
+from django.utils.html import conditional_escape, escapejs, escape
 
 __all__ = ('AutoCompleteSelect2Widget',)
 
@@ -18,6 +18,9 @@ SERIALIZABLE_ATTRS = ('clearonparentchange',)
 
 # a subset of TRANSFERABLE_ATTRS that should be also on "data-*" attrs
 EXPLICIT_TRANSFERABLE_ATTRS = ('placeholder',)
+
+# a subset of TRANSFERABLE_ATTRS that should be double escaped (e.g. to mitigate XSS)
+DOUBLE_ESCAPE_ATTRS = ('initialselection',)
 
 
 class SelectableSelect2MediaMixin(object):
@@ -47,6 +50,7 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
             # because django widget can't properly output json in his attrs
             # so we're flattening the map into string of comma delimitted strings
             # in form "key0,value0,key1,value1,..."
+
             if real_attr == 'parent_namemap':
                 if isinstance(value, dict):
                     value_copy = value.copy()
@@ -57,7 +61,13 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
 
             if real_attr in SERIALIZABLE_ATTRS:
                 value = json.dumps(value)
+                value = escapejs(value)
+
+            if real_attr in DOUBLE_ESCAPE_ATTRS:
+                value = escape(value)
+
             attrs[u'data-djsels2-' + attr] = value
+
             if real_attr in EXPLICIT_TRANSFERABLE_ATTRS:
                 attrs[u'data-' + attr] = value
 
@@ -71,7 +81,8 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
             lookup = self.lookup_class()
             item = lookup.get_item(value)
             if item is not None:
-                initialselection = lookup.get_item_value(item)
+                formatted_item = lookup.format_item(item)
+                initialselection = formatted_item['value']
                 self.initialselection = initialselection
         return super(Select2BaseWidget, self).render(name, value, attrs)
 
