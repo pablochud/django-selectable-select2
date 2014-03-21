@@ -6,4 +6,5 @@ django-staticfiles-jquery
 django-localflavor
 Pillow
 
+-e ..
 
