@@ -1,1 +1,1 @@
-from selectable.base import LookupBase, ModelLookup
+from selectable.base import LookupBase, ModelLookup  # noqa

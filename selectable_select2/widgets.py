@@ -1,8 +1,12 @@
 from selectable.forms.widgets import AutoCompleteWidget
 from django.conf import settings
 
-from django.utils import simplejson as json
-from django.utils.html import conditional_escape, escapejs, escape
+try:
+    import json
+except ImportError:
+    from django.utils import simplejson as json
+
+from django.utils.html import escapejs, escape
 
 __all__ = ('AutoCompleteSelect2Widget',)
 
