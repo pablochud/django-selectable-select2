@@ -44,9 +44,10 @@ class Select2BaseWidget(SelectableSelect2MediaMixin, AutoCompleteWidget):
 
         super(Select2BaseWidget, self).__init__(*args, **kwargs)
 
-    def build_attrs(self, extra_attrs=None, **kwargs):
+    def build_attrs(self, base_attrs, extra_attrs=None):
         attrs = super(Select2BaseWidget, self).build_attrs(extra_attrs, **kwargs)
-
+        if extra_attrs is not None:
+            attrs.update(extra_attrs)
         for real_attr in TRANSFERABLE_ATTRS:
             attr = real_attr.replace('_', '-')
             value = getattr(self, real_attr)
